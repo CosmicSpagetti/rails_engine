@@ -14,6 +14,13 @@ Things you may want to cover:
 * Database creation
 
 * Database initialization
+  rake import_csv:import_1_customers
+  rake import_csv:import_2_merchants 
+  rake import_csv:import_3_items
+  rake import_csv:import_4_invoices
+  rake import_csv:import_5_invoice_items
+  rake import_csv:import_6_transactions
+  rake import_csv:all 
 
 * How to run the test suite
 
