@@ -1,10 +1,10 @@
-require 'rails-helper'
+require 'rails_helper'
 
 describe "Customers API" do 
   it "sends a list of customers" do 
-    create_list(:customers, 3)
+    create_list(:customer, 3)
 
-    get '/api/v1/customers'
+    get "/api/v1/customers"
 
     expect(response).to be_successful
 
@@ -12,4 +12,4 @@ describe "Customers API" do
 
     expect(customers.count).to eq(3)
   end 
-end 
+end
