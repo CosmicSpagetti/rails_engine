@@ -1,6 +1,6 @@
 desc "Import Data files to database"
 
-namespace :import_csv do 
+namespace :import_csv do |import_csv_namespace|
 
   desc "Import customers"
   task customers: :environment  do 
@@ -50,4 +50,10 @@ namespace :import_csv do
     p "Transactions imported"
   end
 
+  task :all do
+    import_csv_namespace.tasks.each do |task|
+      Rake::Task[task].invoke
+    end
+    p "Imported All"
+  end
 end 
