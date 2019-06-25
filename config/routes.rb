@@ -2,37 +2,37 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      resources :customers, only: [:index]
+      resources :customers, only: [:index, :show]
     end
   end
 
   namespace :api do 
     namespace :v1 do 
-      resources :invoices, only: [:index]
+      resources :invoices, only: [:index, :show]
     end
   end
   
   namespace :api do 
     namespace :v1 do 
-      resources :invoice_items, only: [:index]
+      resources :invoice_items, only: [:index, :show]
     end 
   end
 
   namespace :api do 
     namespace :v1 do 
-      resources :items, only: [:index]
+      resources :items, only: [:index, :show]
     end
   end
 
   namespace :api do 
     namespace :v1 do 
-      resources :merchants, only: [:index]
+      resources :merchants, only: [:index, :show]
     end 
   end
 
   namespace :api do 
     namespace :v1 do 
-      resources :transactions, only: [:index]
+      resources :transactions, only: [:index, :show]
     end 
   end
 end
