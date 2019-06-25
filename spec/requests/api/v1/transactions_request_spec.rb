@@ -9,18 +9,18 @@ describe "Transactions API" do
     expect(response).to be_successful
 
     transactions = JSON.parse(response.body)
-
-    expect(transactions.count).to eq(3)
+  
+    expect(transactions["data"].count).to eq(3)
   end 
 
-  it "can get one item by its id" do
-    id = create(:transaction).id
+  it "can get one transaction by its id" do
+    id = create(:transaction).id.to_s
 
     get "/api/v1/transactions/#{id}"
 
     transactions = JSON.parse(response.body)
 
     expect(response).to be_successful
-    expect(transactions["id"]).to eq(id)
+    expect(transactions["data"]["id"]).to eq(id)
   end
 end 
