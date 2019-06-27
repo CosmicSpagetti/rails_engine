@@ -4,4 +4,5 @@ class Invoice < ApplicationRecord
   has_many :transactions
 
   validates_presence_of :status
+  default_scope -> { order(id: :asc ) }
 end
