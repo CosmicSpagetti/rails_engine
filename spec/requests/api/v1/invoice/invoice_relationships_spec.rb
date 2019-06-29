@@ -61,12 +61,36 @@ describe "Invoice relationships" do
     expect(invoice_invoice_items.second["id"]).to eq(invoice_item_2.id.to_s)
   end
 
-  it "should show specified invoices customers" do 
-    invoice_1 = create(:invoice)
-    invoice_2 = create(:invoice)
-    
-    customer_1 = create(:customer, invoice: invoice_1)
-    customer_2 = create(:customer, invoice: invoice_2)
+  it "should show specified invoices customer" do 
+    customer_1 = create(:customer)
+    customer_2 = create(:customer)
+
+    invoice_1 = create(:invoice, customer: customer_1)
+    invoice_2 = create(:invoice, customer: customer_2)
+
+    get "/api/v1/invoices/#{invoice_1.id}/customer"
+
+    customer = JSON.parse(response.body)["data"]
+
+    expect(response).to be_successful 
+
+    expect(customer["id"].to_i).to eq(customer_1.id)
+  end
+
+  it "should show specified invoices merchant" do 
+    merchant_1 = create(:merchant)
+    merchant_2 = create(:merchant)
+
+    invoice_1 = create(:invoice, merchant: merchant_1)
+    invoice_2 = create(:invoice, merchant: merchant_2)
+
+    get "/api/v1/invoices/#{invoice_1.id}/merchant"
+
+    merchant = JSON.parse(response.body)["data"]
+
+    expect(response).to be_successful 
+
+    expect(merchant["id"].to_i).to eq(merchant_1.id)
   end
 
 end
