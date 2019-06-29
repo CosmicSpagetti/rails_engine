@@ -10,17 +10,47 @@ describe "Invoices API" do
 
     invoices = JSON.parse(response.body)
 
-    expect(invoices.count).to eq(3)
+    expect(invoices["data"].count).to eq(3)
   end 
 
-  it "can get one item by its id" do
-    id = create(:invoice).id
+  it "can get one invoice by its id" do
+    id = create(:invoice).id.to_s
 
     get "/api/v1/invoices/#{id}"
 
     invoices = JSON.parse(response.body)
 
     expect(response).to be_successful
-    expect(invoices["id"]).to eq(id)
+    expect(invoices["data"]["id"]).to eq(id)
+  end
+
+  it "can find single invoice based on parameter" do 
+    invoice_1 = create(:invoice)
+    invoice_2 = create(:invoice) 
+    invoice_3 = create(:invoice)
+    invoice_4 = create(:invoice, status: "FAILED")
+    
+
+    get "/api/v1/invoices/find?id=#{invoice_1.id}"
+
+    invoice = JSON.parse(response.body)
+
+    expect(response).to be_successful
+    expect(invoice["data"]["id"]).to eq(invoice_1.id.to_s)
+    expect(invoice["data"]["id"]).to_not eq(invoice_2.id.to_s)
+  end
+
+  it "can find all invoices based on parameter" do 
+    invoice_1 = create(:invoice)
+    invoice_2 = create(:invoice) 
+    invoice_3 = create(:invoice)
+    invoice_4 = create(:invoice, status: "FAILED")
+
+    get "/api/v1/invoices/find_all?status=#{invoice_1.status}"
+
+    invoices = JSON.parse(response.body) 
+    
+    expect(response).to be_successful
+    expect(invoices["data"].count).to eq(3)
   end
 end 

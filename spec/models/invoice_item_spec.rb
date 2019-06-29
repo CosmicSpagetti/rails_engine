@@ -10,4 +10,15 @@ RSpec.describe InvoiceItem, type: :model do
     it { should belong_to :invoice}
     it { should belong_to :item}
   end 
+
+  describe "class methods" do 
+    it ".find_all_by_parameters" do 
+      invoice_item_1 = create(:invoice_item, quantity: 500)
+      invoice_item_2 = create(:invoice_item, quantity: 500) 
+      invoice_item_3 = create(:invoice_item, quantity: 500)
+      invoice_item_4 = create(:invoice_item, quantity: 300) 
+      
+      expect(InvoiceItem.find_all_by_parameters({quantity: "#{invoice_item_1.quantity}"}).count).to eq(3)
+    end
+  end
 end

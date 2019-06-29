@@ -15,6 +15,7 @@ gem 'puma', '~> 3.7'
 gem 'csv'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
+gem 'fast_jsonapi'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
@@ -33,6 +34,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'shoulda-matchers'
   gem 'rspec-rails'
+  gem 'simplecov'
 end
 
 group :development do
