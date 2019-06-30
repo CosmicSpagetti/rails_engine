@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-describe "Business intel for Merchant" do 
-  it "Can return variable merchants ranked by total revenue" do 
+describe "Business intel for Merchant" do
+  before :each do 
     @merchant_1 = create(:merchant, name: "Billy")
     @merchant_2 = create(:merchant, name: "Billy2")
     @merchant_3 = create(:merchant, name: "Billy3")
@@ -41,8 +41,23 @@ describe "Business intel for Merchant" do
     @invoice_item_5 = create(:invoice_item, quantity: 5, item: @item_5, unit_price: 500.0, invoice: @invoice_5)
     @invoice_item_6 = create(:invoice_item, quantity: 6, item: @item_6, unit_price: 1000.0, invoice: @invoice_6)
     @invoice_item_7 = create(:invoice_item, quantity: 7, item: @item_6, unit_price: 1000.0, invoice: @invoice_7)
+  end 
+
+  it "Can return variable merchants ranked by total revenue" do 
 
     get "/api/v1/merchants/most_revenue?quantity=3"
+
+    best_merchants = JSON.parse(response.body)
+
+    expect(response).to be_successful    
+
+    expect(best_merchants['data'].length).to eq(3)
+    expect(best_merchants['data'].first['attributes']['id']).to eq(@merchant_6.id)
+    expect(best_merchants['data'].last['attributes']['id']).to eq(@merchant_4.id)
+  end
+  
+  it "Should return variable merchants ranked by total items sold" do 
+    get "/api/v1/merchants/most_items?quantity=3" 
 
     best_merchants = JSON.parse(response.body)
 
