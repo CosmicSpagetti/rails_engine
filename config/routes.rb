@@ -33,8 +33,6 @@ Rails.application.routes.draw do
         get '/find_all', to: 'search#index'
       end
 
-      resources :customers, only: [:index, :show]
-
       resources :invoices, only: [:index, :show], module: :invoices do 
         resources :transactions, only: :index
         resources :items, only: :index
@@ -42,6 +40,11 @@ Rails.application.routes.draw do
         resources :customer, only: :index
         resources :merchant, only: :index
       end
+
+      resources :customers, only: [:index, :show], module: :customers do 
+        resources :invoices, only: :index 
+      end
+     
 
       resources :invoice_items, only: [:index, :show], module: :invoice_items do 
         resources :item, only: :index

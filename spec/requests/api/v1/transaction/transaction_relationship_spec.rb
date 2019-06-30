@@ -7,8 +7,6 @@ describe "Transaction relationship" do
 
     get "/api/v1/transactions/#{transaction.id}/invoice"
 
-    expect(response).to be_successful
-
     transaction_invoice = JSON.parse(response.body)["data"]
 
     expect(transaction_invoice["id"]).to eq(invoice.id.to_s)
