@@ -27,6 +27,7 @@ Rails.application.routes.draw do
         get '/find', to: "search#show"
         get '/find_all', to: 'search#index'
         get '/most_revenue', to: 'most_revenue#index'
+        get '/most_items', to: 'most_items#index'
       end
 
       namespace :transactions do 

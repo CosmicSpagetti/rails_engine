@@ -5,7 +5,7 @@ class Merchant < ApplicationRecord
   validates_presence_of :name
 
   def self.best_merchants(limit)
-    self.select("merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) AS revenue")
+    select("merchants.*, sum(invoice_items.quantity * invoice_items.unit_price) AS revenue")
     .joins(items: [invoices: [:transactions]])
     .group(:id)
     .reorder("revenue DESC")
@@ -15,5 +15,14 @@ class Merchant < ApplicationRecord
 
   def self.find_all_by_parameters(params)
     where(params)
+  end
+
+  def self.merchants_by_most_items(limit)
+    select("merchants.*, sum(invoice_items.quantity) as items_sold")
+    .joins(items: [invoices: [:transactions]])
+    .group(:id)
+    .reorder("items_sold DESC")
+    .merge(Transaction.successful)
+    .limit(limit)
   end
 end
