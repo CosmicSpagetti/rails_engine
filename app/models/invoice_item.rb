@@ -3,5 +3,7 @@ class InvoiceItem < ApplicationRecord
   belongs_to :invoice
   validates_presence_of :quantity, :unit_price
 
-  default_scope -> { order(id: :asc ) }
+  def self.find_all_by_parameters(params)
+    where(params).order(:id)
+  end
 end

@@ -7,5 +7,8 @@ class Invoice < ApplicationRecord
   has_many :items, through: :invoice_items
 
   validates_presence_of :status
-  default_scope -> { order(id: :asc ) }
+  
+  def self.find_all_by_parameters(params)
+    where(params).order(:id)
+  end
 end

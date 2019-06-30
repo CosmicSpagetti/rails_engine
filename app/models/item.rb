@@ -4,5 +4,8 @@ class Item < ApplicationRecord
   has_many :invoices, through: :invoice_items
 
   validates_presence_of :name, :description, :unit_price 
-  default_scope -> { order(id: :asc ) }
+
+  def self.find_all_by_parameters(params)
+    where(params).order(:id)
+  end
 end
