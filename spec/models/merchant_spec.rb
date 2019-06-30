@@ -9,16 +9,8 @@ RSpec.describe Merchant, type: :model do
     it { should have_many :items}
   end
 
-  describe "class methods" do 
-    it ".find_all_by_parameters" do 
-      merchant_1 = create(:merchant)
-      merchant_2 = create(:merchant) 
-      merchant_3 = create(:merchant)
-      merchant_4 = create(:merchant, name: "billy")
-      
-      expect(Merchant.find_all_by_parameters({name: "#{merchant_1.name}"}).count).to eq(3)
-    end
-    it ".best_merchant brings back the best merchants by revenue" do 
+  describe "class methods" do
+    before :each do 
       @merchant_1 = create(:merchant, name: "Billy")
       @merchant_2 = create(:merchant, name: "Billy2")
       @merchant_3 = create(:merchant, name: "Billy3")
@@ -58,8 +50,22 @@ RSpec.describe Merchant, type: :model do
       @invoice_item_5 = InvoiceItem.create(quantity: 5, item: @item_5, unit_price: 500.0, invoice: @invoice_5)
       @invoice_item_6 = InvoiceItem.create(quantity: 6, item: @item_6, unit_price: 1000.0, invoice: @invoice_6)
       @invoice_item_7 = InvoiceItem.create(quantity: 7, item: @item_6, unit_price: 1000.0, invoice: @invoice_7)
+    end 
+    it ".find_all_by_parameters" do 
+      merchant_1 = create(:merchant)
+      merchant_2 = create(:merchant) 
+      merchant_3 = create(:merchant)
+      merchant_4 = create(:merchant, name: "billy")
+      
+      expect(Merchant.find_all_by_parameters({name: "#{merchant_1.name}"}).count).to eq(3)
+    end
+    it ".best_merchant brings back the best merchants by revenue" do
 
       expect(Merchant.best_merchants(2)).to eq([@merchant_6, @merchant_5])
+    end
+
+    it ".merchants_by_most_items" do 
+      expect(Merchant.merchants_by_most_items(3)).to eq([@merchant_6, @merchant_5, @merchant_4]) 
     end
   end
 end
