@@ -34,21 +34,21 @@ describe "Business intel for Merchant" do
     @transaction_6 = create(:transaction, invoice: @invoice_6)
     @transaction_7 = create(:transaction, invoice: @invoice_7, result: 'failed')
 
-    @invoice_item_1 = InvoiceItem.create(quantity: 1, item: @item_1, unit_price: 10.0, invoice: @invoice_1)
-    @invoice_item_2 = InvoiceItem.create(quantity: 2, item: @item_2, unit_price: 200.0, invoice: @invoice_2)
-    @invoice_item_3 = InvoiceItem.create(quantity: 3, item: @item_3, unit_price: 300.0, invoice: @invoice_3)
-    @invoice_item_4 = InvoiceItem.create(quantity: 4, item: @item_4, unit_price: 400.0, invoice: @invoice_4)
-    @invoice_item_5 = InvoiceItem.create(quantity: 5, item: @item_5, unit_price: 500.0, invoice: @invoice_5)
-    @invoice_item_6 = InvoiceItem.create(quantity: 6, item: @item_6, unit_price: 1000.0, invoice: @invoice_6)
-    @invoice_item_7 = InvoiceItem.create(quantity: 7, item: @item_6, unit_price: 1000.0, invoice: @invoice_7)
+    @invoice_item_1 = create(:invoice_item,quantity: 1, item: @item_1, unit_price: 10.0, invoice: @invoice_1)
+    @invoice_item_2 = create(:invoice_item, quantity: 2, item: @item_2, unit_price: 200.0, invoice: @invoice_2)
+    @invoice_item_3 = create(:invoice_item, quantity: 3, item: @item_3, unit_price: 300.0, invoice: @invoice_3)
+    @invoice_item_4 = create(:invoice_item, quantity: 4, item: @item_4, unit_price: 400.0, invoice: @invoice_4)
+    @invoice_item_5 = create(:invoice_item, quantity: 5, item: @item_5, unit_price: 500.0, invoice: @invoice_5)
+    @invoice_item_6 = create(:invoice_item, quantity: 6, item: @item_6, unit_price: 1000.0, invoice: @invoice_6)
+    @invoice_item_7 = create(:invoice_item, quantity: 7, item: @item_6, unit_price: 1000.0, invoice: @invoice_7)
 
     get "/api/v1/merchants/most_revenue?quantity=3"
 
-    best_merchant = JSON.parse(response.body)
+    best_merchants = JSON.parse(response.body)
 
     expect(response).to be_successful    
 
-    expect(best_merchants['data'].length).to eq(5)
+    expect(best_merchants['data'].length).to eq(3)
     expect(best_merchants['data'].first['attributes']['id']).to eq(@merchant_6.id)
     expect(best_merchants['data'].last['attributes']['id']).to eq(@merchant_4.id)
   end

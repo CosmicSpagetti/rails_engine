@@ -59,7 +59,7 @@ RSpec.describe Merchant, type: :model do
       @invoice_item_6 = InvoiceItem.create(quantity: 6, item: @item_6, unit_price: 1000.0, invoice: @invoice_6)
       @invoice_item_7 = InvoiceItem.create(quantity: 7, item: @item_6, unit_price: 1000.0, invoice: @invoice_7)
 
-      expect(Merchant.best_merchant(2)).to eq([@merchant_6, @merchant_5])
+      expect(Merchant.best_merchants(2)).to eq([@merchant_6, @merchant_5])
     end
   end
 end
